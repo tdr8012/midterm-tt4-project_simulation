@@ -34,22 +34,3 @@ COPY ./api/package*.json /app/
 
 COPY --from=builder ./app/dist /var/www/html
 COPY ./default.conf /etc/nginx/sites-available/default
-COPY ./database.sql /app/
-COPY ./creaete_tables_db.py /app/
-
-RUN echo "API_PORT = 3000">> /app/.env &&\
-    echo "MARIADB_ROOT_PASSWORD = 123456">> /app/.env &&\
-    echo "MARIADB_DATABASE-simple_calc_db">> /app/.env &&\ 
-    echo "MARIADB_USER = simple">> /app/.env &&\ 
-    echo "MARIADB_PASSWORD = 654321">> /app/.env 
-
-
-EXPOSE 80
-
-COPY entrypoint.sh /entrypoint.sh
-#THIS WILL BE OUR ENTRYPOINT SCRIPT EXECUTABLE
-
-RUN chmod +x /entrypoint.sh
-#this will be execute
-
-ENTRYPOINT [ "/entrypoint.sh" ]
